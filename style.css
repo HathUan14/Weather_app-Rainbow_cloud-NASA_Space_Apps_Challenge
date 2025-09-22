@@ -1,0 +1,305 @@
+:root{
+  --bg: #ffffff;
+  --accent: #0f62fe;
+  --muted: #6b7280;
+  --input-bg: #f3f4f6;
+  --border: #e6e7eb;
+  --shadow: 0 6px 18px rgba(15,22,39,0.06);
+  --radius: 12px;
+  --header-height: 84px; 
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:#0b1220;
+  -webkit-font-smoothing:antialiased;
+}
+
+/*----------------Top bar ------------------- */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:40px;
+  padding:18px 24px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg, #ffffff, #fbfdff);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand .logo{
+  width:42px;
+  height:42px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:10px;
+  background:linear-gradient(135deg,#0f62fe,#6f8cff);
+  color:white;
+  font-weight:700;
+  font-size:18px;
+  box-shadow: 0 4px 12px rgba(15,98,254,0.12);
+}
+.brand h1{
+  margin:0;
+  font-size:18px;
+}
+.brand p{
+  margin:0;
+  margin-top:2px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.search-area{
+  display:flex;
+  align-items:center;
+  gap:30px;
+}
+
+.search-form{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.input-wrap{
+  position:relative;
+}
+.search-input{
+  width:440px;
+  max-width:48vw;
+  min-width:180px;
+  padding:10px 14px 10px 40px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--input-bg);
+  font-size:14px;
+  outline:none;
+}
+.search-input:focus{
+  border-color:var(--accent);
+  box-shadow: 0 6px 20px rgba(15,98,254,0.12);
+  background: #fff;
+}
+
+.search-icon{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  pointer-events:none;
+  color:var(--muted);
+}
+
+.map-btn{
+  display:inline-grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:white;
+  cursor:pointer;
+  transition:transform .12s, box-shadow .12s, border-color .12s;
+  box-shadow: var(--shadow);
+}
+.map-btn:hover{
+  transform:translateY(-2px);
+  border-color: rgba(15,98,254,0.18);
+}
+.map-btn:active{ transform:translateY(0); }
+
+@media (max-width:640px){
+  .topbar{ padding:12px; gap:12px; }
+  .brand h1{ font-size:16px; }
+  .search-input{ width:220px; max-width:38vw; padding-left:36px; }
+  .map-btn{ width:40px; height:40px; }
+}
+
+
+/*---------------- Header và dashboard ------------------*/
+header {
+  height: var(--header-height); 
+  min-height: 84px;
+  background: #0b72b9;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+/* MAIN dashboard: grid 2fr / 1fr */
+#main {
+    display: flex;
+    height: 80vh ;
+}
+/* Info (trái) */
+#info {
+    flex: 2;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #e6e9ef;
+    padding: 16px;
+    overflow-y: auto;
+    overflow: auto;     
+    min-width: 220px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+}
+/* Map wrapper (phải) */
+#mapWrapper {
+    flex: 1;
+    min-width: 260px;
+    position: relative;   
+}
+/* Map itself: chiếm toàn bộ khung mapWrapper */
+#map {
+    height: 100%;
+    width: 100%;
+    position:absolute;
+    top:0;right:0;bottom:0;left:0;
+}
+
+.leaflet-control-layers-expanded {
+    max-height: 200px;
+    overflow-y: auto;
+}
+/* Overlay UI trên map nếu cần (ví dụ nút, control) */
+.map-overlay-ui {
+  position: absolute;
+  z-index: 1000;
+  right: 10px;
+  top: 10px;
+}
+/* Responsive: trên màn hình nhỏ (mobile) stack dọc */
+@media (max-width: 768px) {
+  #dashboard {
+    grid-template-columns: 1fr;   /* chỉ 1 cột */
+    grid-auto-rows: min-content; /* chiều cao theo nội dung */
+    height: auto;                /* để trang cuộn bình thường */
+  }
+
+  /* Đặt map cao cố định hợp lý trên mobile */
+  #map {
+    min-height: 45vh;
+  }
+}
+.legend { margin-top: 12px; }
+.legend .item {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+}
+.legend .swatch {
+  width: 28px;
+  height: 18px;
+  margin-right: 8px;
+  border: 1px solid #bbb;
+}
+pre {
+  background: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #e2e2e2;
+}
+
+/*--------------- Options -----------------*/
+.weather-controls {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;          
+  gap: 25px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+}
+
+/* Base button */
+.weather-controls .btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  cursor: pointer;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(2,6,23,0.08);
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;         /* điều chỉnh kích thước nút */
+  text-align: center;
+  justify-content: center;
+}
+
+/* Hover / focus */
+.weather-controls .btn:hover,
+.weather-controls .btn:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+  outline: none;
+  opacity: 0.98;
+}
+
+/* Keyboard focus visible */
+.weather-controls .btn:focus-visible {
+  outline: 3px solid rgba(255,255,255,0.18);
+  outline-offset: 3px;
+}
+
+/* Active / selected state */
+.weather-controls .btn.active,
+.weather-controls .btn[aria-selected="true"] {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 10px 24px rgba(2,6,23,0.14);
+  filter: saturate(1.06);
+}
+
+/* Individual colors (choose accessible palettes) */
+.btn--primary {
+  background: linear-gradient(180deg,#2b9cff,#1e7fe6);
+}
+.btn--hourly {
+  background: linear-gradient(180deg,#6bd6ff,#20b6e6);
+  color: #022;
+}
+.btn--planning {
+  background: linear-gradient(180deg,#ffd06b,#ffb020);
+  color: #111;
+}
+.btn--self {
+  background: linear-gradient(180deg,#9b8cff,#6f4fe6);
+}
+
+/* Small screens: make buttons full width stacked */
+@media (max-width:520px) {
+  .weather-controls .btn {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+}
+
+/*--------------Các dashboard bên dưới--------------- */
+.info-box {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      background: #f9f9f9;
+    }
+.info-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
