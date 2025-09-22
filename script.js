@@ -130,7 +130,7 @@ export async function updateInfo(lat, lon, climateType, elevation, place_name, c
         // Min/Max
         const minC = (current.main.temp_min - 273.15).toFixed(1);
         const maxC = (current.main.temp_max - 273.15).toFixed(1);
-        document.getElementById('temp_range').innerHTML = `${minC}°C / ${maxC}°C`;
+        document.getElementById('temp_range').innerHTML = `Min ${minC}°C / Max ${maxC}°C`;
 
         // Humidity
         const humidity = current.main.humidity;
