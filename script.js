@@ -44,15 +44,35 @@ export async function getElevation(lat, lon) {
 }
 
 // Lấy vùng khí hậu từ GeoTIFF 
-export async function getClimate(lat, lon, georaster){
+
+import {koppenClasses} from "./map.js";
+
+export function getClimate(lat, lon, georaster) {
   let climateCode = null;
-  let climateType = "Unknown"; // Cần cài đặt
+  let climateType = "Unknown";
+
   try {
     if (georaster) {
-      const values = georaster.getValuesAtLatLng(lat, lon);
-      if (values && values.length > 0) {
-        climateCode = values[0];
-        
+      // Lấy thông tin từ georaster
+      const xmin = georaster.xmin;
+      const ymax = georaster.ymax;
+      const pixelWidth = georaster.pixelWidth;
+      const pixelHeight = georaster.pixelHeight;
+
+      // Tính chỉ số pixel (col, row)
+      const xPixel = Math.floor((lon - xmin) / pixelWidth);
+      const yPixel = Math.floor((ymax - lat) / pixelHeight);
+
+      // Đọc giá trị từ band 0
+      if (
+        yPixel >= 0 && yPixel < georaster.height &&
+        xPixel >= 0 && xPixel < georaster.width
+      ) {
+        const value = georaster.values[0][yPixel][xPixel];
+        climateCode = value;
+        if (koppenClasses[value]) {
+          climateType = `${koppenClasses[value].name}`;
+        }
       }
     }
   } catch (err) {
@@ -107,7 +127,7 @@ document.querySelectorAll("button[data-target]").forEach(btn => {
     });
 });
 
-////// Hàm cập nhật thông tin 
+////// Hàm cập nhật tất cả thông tin 
 
 export async function updateInfo(lat, lon, climateType, elevation, place_name, country) {
     document.getElementById('location_name').innerHTML = place_name + ', ' + country;
