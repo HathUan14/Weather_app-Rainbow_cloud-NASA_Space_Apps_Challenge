@@ -122,17 +122,25 @@ document.querySelectorAll("button[data-target]").forEach(btn => {
         main.insertAdjacentElement("afterend", div); // Thêm bên cạnh main
 
         // Scroll xuống div vừa tạo
-        div.scrollIntoView({ behavior: "smooth" });
+        // div.scrollIntoView({ behavior: "smooth" });
     }
     });
 });
 
 ////// Hàm cập nhật tất cả thông tin 
 
-export async function updateInfo(lat, lon, climateType, elevation, place_name, country) {
+export async function updateInfo(lat, lon, climateCode, climateType, elevation, place_name, country) {
     document.getElementById('location_name').innerHTML = place_name + ', ' + country;
     document.getElementById('elevation').innerHTML = "Leviation: " + elevation + 'm';
-    document.getElementById('climate_type').innerHTML = "Climate type: " + climateType;
+    const containerClimate = document.getElementById('climate_type');
+    containerClimate.innerHTML = 
+    `Climate: <a class="climate-link" data-code="${climateCode}">${climateType}</a>`;
+    // click khí hậu
+    const link = containerClimate.querySelector(".climate-link");
+    link.onclick = function() {
+      showClimatePopup(climateCode, climateType);
+    };
+
     try {
         const current = await getCurrentWeather(lat, lon);
         // Thông tin chính 
@@ -181,3 +189,30 @@ export async function updateInfo(lat, lon, climateType, elevation, place_name, c
         console.error("Error updating info:", err);
     }
 }
+
+
+////// Modal popup cho thông tin khí hậu
+
+function showClimatePopup(climateCode, climateType) {
+  const modal = document.getElementById("climate_modal");
+  const title = document.getElementById("climate_title");
+  const desc = document.getElementById("climate_description");
+
+  title.textContent = `${climateCode} - ${climateType}`;
+  desc.textContent = `Mã khí hậu: ${climateCode}\nMô tả: ${climateType}`;
+
+  modal.style.display = "block";
+}
+
+// Đóng modal khi bấm dấu X
+document.querySelector(".modal .close").onclick = function() {
+  document.getElementById("climate_modal").style.display = "none";
+};
+
+// Đóng modal khi click ra ngoài
+window.onclick = function(event) {
+  const modal = document.getElementById("climate_modal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};

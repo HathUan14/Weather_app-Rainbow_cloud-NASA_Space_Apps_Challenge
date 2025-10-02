@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Weather Forecast Viewer</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      .form-group {
+        margin-bottom: 10px;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+      }
+      input {
+        padding: 5px;
+        width: 250px;
+      }
+      button {
+        padding: 6px 12px;
+      }
+      #summary {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background: #f9f9f9;
+      }
+      .chart {
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Weather Forecast</h1>
+
+    <div>
+      <div class="form-group">
+        <label for="place">Địa điểm:</label>
+        <input type="text" id="place" value="Ho Chi Minh" />
+      </div>
+      <div class="form-group">
+        <label for="date">Ngày (yyyy-mm-dd):</label>
+        <input type="date" id="date" />
+      </div>
+      <button onclick="getForecast()">Xem dự báo</button>
+    </div>
+
+    <div id="summary"></div>
+    <div id="charts"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Weather Risk Assessment</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/> <!-- Vẽ bản đồ -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Vẽ biểu đồ -->
 </head>
 <body>
 
@@ -42,6 +43,33 @@
           </svg>
         </button>
 
+        <!-- Start Date -->
+        <div class="input-wrap">
+          <!-- <label for="startDate" class="date-label">Start</label> -->
+          <input id="startDate" class="search-input date-input" type="date" name="start-date"
+             aria-label="Start date">
+        </div>
+
+        <!-- End Date -->
+        <div class="input-wrap">
+          <!-- <label for="startDate" class="date-label">End</label> -->
+          <input id="endDate" class="search-input date-input" type="date" name="end-date"
+             aria-label="End date">
+        </div>
+
+        <!-- Activity -->
+        <div class="input-wrap">
+          <select id="activitySelect" class="search-select" name="activity" aria-label="Select activity">
+            <option value="none" selected>Activity</option>
+            <option value="hiking">Hiking</option>
+            <option value="cycling">Cycling</option>
+            <option value="swimming">Swimming</option>
+            <option value="camping">Camping</option>
+          </select>
+        </div>
+
+        <!-- Get Weather Button -->
+        <button type="submit" class="get-weather-btn" onclick="getForecastByModel()">Get Weather</button>
       </form>
     </div>
   </header>
@@ -54,6 +82,15 @@
                 <h2 id="location_name"></h2>
                 <div id="elevation">Leviation: </div>
                 <div id="climate_type">Climate type: </div>
+
+                <!-- Popup modal cho khí hậu -->
+                <div id="climate_modal" class="modal">
+                  <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="climate_title"></h2>
+                    <p id="climate_description"></p>
+                  </div>
+                </div>
             </div>
             <!-- Block trên -->
             <div id="top_info" style="display:flex; gap:20px; align-items:center; margin-bottom:20px;">
@@ -62,6 +99,10 @@
                     <h1 id="temperature" style="margin:0; font-size:2.5rem;"></h1>
                     <div id="weather_desc" style="font-size:1.2rem; color:#555;"></div>
                     <div id="feels_like" style="font-size:1rem; color:#777;"></div>
+                </div>
+                <!-- Recommend -->
+                <div id="recommend">
+                  <p>Recommendation sẽ hiển thị ở đây...</p>
                 </div>
             </div>
 
@@ -136,7 +177,7 @@
 
   <script type="module" src="script.js"></script>
   <script type="module" src="map.js"></script>
-  <script type="module" scr="options.js"></script>
+  <script type="module" src="options.js"></script>
 
 </body>
 </html>

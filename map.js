@@ -12,6 +12,21 @@ const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenTopoMap'
 });
 
+// Mask che phủ text Biển Đông
+var mask1 = L.circle([16.4045, 111.8198], {
+    radius: 150000,        
+    color: "rgb(170, 211, 223)",    
+    fillColor: "rgb(170, 211, 223)",
+    fillOpacity: 1.0     
+}).addTo(map);
+
+var mask2 = L.circle([10.2794, 114.0521], {
+    radius: 200000,        
+    color: "rgb(170, 211, 223)",    
+    fillColor: "rgb(170, 211, 223)",
+    fillOpacity: 1.0     
+}).addTo(map);
+
 // GeoJSON overlay Biển Đông
 var islands = {
   "type": "FeatureCollection",
@@ -149,7 +164,7 @@ document.querySelector('.search-form').addEventListener('submit', async (e) => {
 
     markersLayer.addLayer(marker); // Thêm marker vào layer group
     // Cập nhật
-    updateInfo(coords.lat, coords.lon, climate.climateType, elevation, coords.local_name['en'], coords.country);
+    updateInfo(coords.lat, coords.lon, climate.climateCode, climate.climateType, elevation, coords.local_name['en'], coords.country);
   }
 });
 
@@ -176,7 +191,7 @@ map.on('click', async function(e) {
 
     console.log("Clicked:", lat, lon, data.place_name);
     // Cập nhật
-    updateInfo(lat, lon, climate.climateType, elevation, data.place_name, data.country);
+    updateInfo(lat, lon, climate.climateCode, climate.climateType, elevation, data.place_name, data.country);
 
   } catch (error) {
     console.error("Error fetching location:", error);
