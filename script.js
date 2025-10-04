@@ -188,7 +188,7 @@ export async function updateInfo(
   // click khí hậu
   const link = containerClimate.querySelector(".climate-link");
   link.onclick = function () {
-    showClimatePopup(climateCode, climateType);
+    showClimatePopup(climateCode, climateType, place_name);
   };
 
   try {
@@ -249,12 +249,12 @@ export async function updateInfo(
 
 ////// Modal popup cho thông tin khí hậu
 
-function showClimatePopup(climateCode, climateType) {
+async function showClimatePopup(climateCode, climateType, place) {
   const modal = document.getElementById("climate_modal");
   const title = document.getElementById("climate_title");
   const desc = document.getElementById("climate_description");
 
-  title.textContent = `${climateCode} - ${climateType}`;
+  title.textContent = `${climateCode} - ${climateType} - ${place}`;
   // Đọc file txt có tên trùng với climateCode
   fetch(`./data/climate/desc-en/${climateCode}.txt`)
     .then((response) => {
@@ -279,6 +279,45 @@ function showClimatePopup(climateCode, climateType) {
     imgEl.alt = `${climateType} - Ảnh ${i}`;
   }
   modal.style.display = "block";
+
+
+  // Tải chart lịch sử khí hậu
+  try {
+      const chartDiv = document.getElementById("chartsHistory");
+      chartDiv.innerHTML = `<p style="text-align:center">Loading...</p>`;
+      // Gọi API
+      const res = await fetch(
+        `http://127.0.0.1:8000/monthly_weather?place=${encodeURIComponent(
+          place
+        )}`
+      );
+
+      const data = await res.json();
+
+      // Xóa loading khi có dữ liệu
+      chartDiv.innerHTML = "";
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      //  Vẽ biểu đồ
+      Object.keys(data.figures).forEach((param) => {
+        const figData = JSON.parse(data.figures[param]);
+        const container = document.createElement("div");
+        container.className = "chart";
+        container.id = "chart_" + param;
+        chartDiv.appendChild(container);
+
+        Plotly.newPlot(container, figData.data, figData.layout);
+      });
+
+  } catch (err) {
+    console.error(err);
+    alert("Lỗi khi gọi API!");
+  }
+
 }
 
 // Đóng modal khi bấm dấu X

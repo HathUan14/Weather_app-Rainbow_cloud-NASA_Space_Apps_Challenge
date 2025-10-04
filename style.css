@@ -413,9 +413,12 @@ a.climate-link {
   gap: 20px;
 }
 
-/* Text chiếm 2/3 */
+/* Text + chart chiếm 2/3 */
 .modal-text {
   flex: 2;
+  display: flex;
+  flex-direction: column; /* sắp xếp theo cột: chart trên, text dưới */
+  gap: 10px; /* khoảng cách giữa 2 phần */
 }
 
 /* Ảnh chiếm 1/3 */
@@ -500,7 +503,6 @@ a.climate-link {
   gap: 20px; /* khoảng cách giữa các chart */
   padding: 10px;
 }
-
 #chartsHourly .chart {
   width: 100% !important;  /* ép mỗi chart full chiều ngang của ô */
   height: 400px;           
@@ -513,7 +515,12 @@ a.climate-link {
   padding: 10px;
 }
 
-#chartsTenDays .chart {
-  width: 100% !important;  /* ép mỗi chart full chiều ngang của ô */
-  height: 400px;           
+#chartsHistory {
+  display: flex;
+  flex-direction: column; 
+}
+#chartsHistory .plotly-chart {
+  width: 100%;
+  min-height: 200px;   
+  aspect-ratio: 3 / 2;
 }
