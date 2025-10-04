@@ -411,3 +411,19 @@ a.climate-link {
   font-size: 16px;
   font-style: bold;
 }
+
+
+
+/*--------------- Charts ------------------ */
+
+#chartsHourly {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cột */
+  gap: 20px; /* khoảng cách giữa các chart */
+  padding: 10px;
+}
+
+#chartsHourly .chart {
+  width: 100% !important;  /* ép mỗi chart full chiều ngang của ô */
+  height: 400px;           /* tuỳ chỉnh chiều cao */
+}

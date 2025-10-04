@@ -69,9 +69,9 @@ export function getClimate(lat, lon, georaster) {
         xPixel >= 0 && xPixel < georaster.width
       ) {
         const value = georaster.values[0][yPixel][xPixel];
-        climateCode = value;
         if (koppenClasses[value]) {
           climateType = `${koppenClasses[value].name}`;
+          climateCode = `${koppenClasses[value].code}`;
         }
       }
     }

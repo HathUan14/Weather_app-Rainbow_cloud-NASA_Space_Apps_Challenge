@@ -153,7 +153,6 @@ document.querySelector('.search-form').addEventListener('submit', async (e) => {
   const coords = await getCoordinates(city);
     const elevation = await getElevation(coords.lat, coords.lon);
     const climate = await getClimate(coords.lat, coords.lon, georaster);
-
   if (coords) {
     map.setView([coords.lat, coords.lon], 8);
     markersLayer.clearLayers(); // Xóa toàn bộ marker cũ
