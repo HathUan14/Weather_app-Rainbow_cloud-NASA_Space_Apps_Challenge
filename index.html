@@ -145,13 +145,16 @@
           </div>
 
           <!-- Get Weather Button -->
-          <button
-            type="submit"
-            class="get-weather-btn"
-            onclick="getForecastByModel()"
-          >
+          <button id="getWeatherBtn" type="submit" class="get-weather-btn">
             Get Weather
           </button>
+          <script type="module">
+            import { runGenerate } from "./script.js";
+
+            document
+              .getElementById("getWeatherBtn")
+              .addEventListener("click", runGenerate);
+          </script>
         </form>
       </div>
     </header>
@@ -215,205 +218,187 @@
             <div id="weather_desc" style="font-size: 1.2rem; color: #555"></div>
             <div id="feels_like" style="font-size: 1rem; color: #777"></div>
           </div>
-          <!-- Recommend -->
+        </div>
+
+          <!-- Block dưới -->
+          <div
+            id="details_grid"
+            style="
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 20px;
+            "
+          >
+            <div
+              class="grid_item"
+              style="
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: left;
+              "
+            >
+              <div>🌡️ Temperature</div>
+              <div id="temp_range"></div>
+            </div>
+
+            <div
+              class="grid_item"
+              style="
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: left;
+              "
+            >
+              <div>💧 Humidity</div>
+              <div id="humidity_value"></div>
+              <div
+                style="
+                  background: #eee;
+                  height: 8px;
+                  border-radius: 4px;
+                  margin-top: 4px;
+                "
+              >
+                <div
+                  id="humidity_bar"
+                  style="
+                    height: 100%;
+                    background: #4da6ff;
+                    border-radius: 4px;
+                    width: 0%;
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <div
+              class="grid_item"
+              style="
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: left;
+              "
+            >
+              <div>🌬️ Wind</div>
+              <div id="wind_value"></div>
+            </div>
+
+            <div
+              class="grid_item"
+              style="
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: left;
+              "
+            >
+              <div>☔ Precipitation</div>
+              <div id="precip_value">0 mm</div>
+            </div>
+
+            <div
+              class="grid_item"
+              style="
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: left;
+              "
+            >
+              <div>☀️ UV Index</div>
+              <div id="uv_index">Moderate</div>
+            </div>
+
+            <div
+              class="grid_item"
+              style="
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: left;
+              "
+            >
+              <div>😊 Comfort</div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: left;
+                  gap: 4px;
+                  margin-top: 6px;
+                "
+              >
+                <div
+                  class="comfort_bar"
+                  style="
+                    width: 20px;
+                    height: 20px;
+                    background: #ddd;
+                    border-radius: 4px;
+                  "
+                ></div>
+                <div
+                  class="comfort_bar"
+                  style="
+                    width: 20px;
+                    height: 20px;
+                    background: #ddd;
+                    border-radius: 4px;
+                  "
+                ></div>
+                <div
+                  class="comfort_bar"
+                  style="
+                    width: 20px;
+                    height: 20px;
+                    background: #ddd;
+                    border-radius: 4px;
+                  "
+                ></div>
+                <div
+                  class="comfort_bar"
+                  style="
+                    width: 20px;
+                    height: 20px;
+                    background: #ddd;
+                    border-radius: 4px;
+                  "
+                ></div>
+                <div
+                  class="comfort_bar"
+                  style="
+                    width: 20px;
+                    height: 20px;
+                    background: #ddd;
+                    border-radius: 4px;
+                  "
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Options -->
+          <div class="weather-controls" aria-label="Weather view selector">
+            <button class="btn btn--primary" data-target="ten-days">
+              Future Weather
+            </button>
+            <button class="btn btn--hourly" data-target="hourly">
+              Hourly Weather
+            </button>
+            <button class="btn btn--planning" data-target="planning">
+              For planning
+            </button>
+            <button class="btn btn--self" data-target="self">
+              Self forecasting
+            </button>
+          </div>
           <div id="recommend">
-            <div class="recomend-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos molestias iusto reiciendis rem beatae nihil ipsum temporibus eum in laboriosam!
-            Rem cupiditate dolorem minus veniam dolores molestiae, exercitationem fuga officiis ea unde excepturi qui. Ducimus aliquid modi quos facere totam.
-            Natus deleniti rerum eveniet cumque facere id, iure repellendus soluta amet doloribus nihil eius laudantium ducimus saepe sit. Iste, ipsum!
-            Reprehenderit obcaecati quibusdam aliquam facilis, voluptates inventore ullam officia magni tempora architecto soluta! Ipsum suscipit nesciunt, expedita aliquid voluptate optio.
-            Rem laboriosam accusamus facere numquam debitis libero doloremque reiciendis vel quis minima recusandae, possimus beatae quidem sapiente! Veniam, blanditiis id.
-            Nostrum adipisci fugiat voluptatum enim assumenda natus totam voluptatibus iusto in perspiciatis cupiditate ab aut, beatae vel id officia. Error.
-            Repellat voluptas qui velit labore dolorem culpa nemo facere consequatur non unde beatae natus, sequi ex neque quaerat? Dolorum, inventore.
-            Maiores officiis molestiae, optio amet reprehenderit sit eaque vitae perspiciatis asperiores dolor doloremque provident corporis culpa velit ex consequatur. Totam.
-            Porro perspiciatis placeat, illum omnis facere quae esse aut labore rem laboriosam? Laborum incidunt nemo assumenda ipsam enim magnam. Quidem.
-            Et itaque iste sed delectus eos laudantium pariatur iure numquam quo optio nam, amet, asperiores quam recusandae ducimus fugiat cum.
-            Ducimus reiciendis voluptatem hic unde sapiente non. Fugit ipsa deleniti reprehenderit harum, dolorem ea ad nulla odit expedita similique perspiciatis?
-            Ex laborum nobis numquam? Iure necessitatibus aut, qui numquam rerum ipsum officia corporis eaque et, a sunt voluptates fuga consectetur!
-            Molestias modi ab magnam earum animi eligendi, mollitia sequi sit quas facilis et, qui recusandae id, ad alias explicabo ea.
-            Cum quod velit quaerat saepe. Recusandae commodi quo vitae nesciunt facere id, tenetur mollitia doloremque quos asperiores corrupti aut numquam?
-            Autem minus eligendi mollitia cum. Qui ullam, itaque, debitis mollitia velit, cum quidem asperiores laboriosam neque tempore omnis! Hic, quas!
-            Laudantium libero repellendus repellat pariatur, aspernatur optio aliquam voluptate recusandae doloremque totam nihil veniam! Enim quo necessitatibus distinctio fuga aliquam.
-            Expedita vitae optio odio repellat aut culpa, delectus libero inventore facilis sed quisquam blanditiis deserunt voluptates nesciunt dolores asperiores accusantium!
-            Iusto nihil, quisquam soluta voluptatem, deserunt accusantium dolore sed hic aliquam obcaecati facere ut laborum magni cupiditate necessitatibus eligendi ad!
-            Nobis veritatis iste reprehenderit, nihil quos dignissimos officia quas, asperiores ipsa minima, sunt cumque ex esse iure eligendi. Voluptas, eos?
-            Laborum vitae iure rem dolores quam voluptatem, optio animi maiores unde dolor eveniet cupiditate adipisci reprehenderit corrupti? Eum, officiis aliquid!
-            </div>
+          <div id="recommend-text">
+            Đang tạo lời khuyên cho người dùng...
           </div>
         </div>
-
-        <!-- Block dưới -->
-        <div
-          id="details_grid"
-          style="
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-          "
-        >
-          <div
-            class="grid_item"
-            style="
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 10px;
-              text-align: left;
-            "
-          >
-            <div>🌡️ Temperature</div>
-            <div id="temp_range"></div>
-          </div>
-
-          <div
-            class="grid_item"
-            style="
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 10px;
-              text-align: left;
-            "
-          >
-            <div>💧 Humidity</div>
-            <div id="humidity_value"></div>
-            <div
-              style="
-                background: #eee;
-                height: 8px;
-                border-radius: 4px;
-                margin-top: 4px;
-              "
-            >
-              <div
-                id="humidity_bar"
-                style="
-                  height: 100%;
-                  background: #4da6ff;
-                  border-radius: 4px;
-                  width: 0%;
-                "
-              ></div>
-            </div>
-          </div>
-
-          <div
-            class="grid_item"
-            style="
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 10px;
-              text-align: left;
-            "
-          >
-            <div>🌬️ Wind</div>
-            <div id="wind_value"></div>
-          </div>
-
-          <div
-            class="grid_item"
-            style="
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 10px;
-              text-align: left;
-            "
-          >
-            <div>☔ Precipitation</div>
-            <div id="precip_value">0 mm</div>
-          </div>
-
-          <div
-            class="grid_item"
-            style="
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 10px;
-              text-align: left;
-            "
-          >
-            <div>☀️ UV Index</div>
-            <div id="uv_index">Moderate</div>
-          </div>
-
-          <div
-            class="grid_item"
-            style="
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 10px;
-              text-align: left;
-            "
-          >
-            <div>😊 Comfort</div>
-            <div
-              style="
-                display: flex;
-                justify-content: left;
-                gap: 4px;
-                margin-top: 6px;
-              "
-            >
-              <div
-                class="comfort_bar"
-                style="
-                  width: 20px;
-                  height: 20px;
-                  background: #ddd;
-                  border-radius: 4px;
-                "
-              ></div>
-              <div
-                class="comfort_bar"
-                style="
-                  width: 20px;
-                  height: 20px;
-                  background: #ddd;
-                  border-radius: 4px;
-                "
-              ></div>
-              <div
-                class="comfort_bar"
-                style="
-                  width: 20px;
-                  height: 20px;
-                  background: #ddd;
-                  border-radius: 4px;
-                "
-              ></div>
-              <div
-                class="comfort_bar"
-                style="
-                  width: 20px;
-                  height: 20px;
-                  background: #ddd;
-                  border-radius: 4px;
-                "
-              ></div>
-              <div
-                class="comfort_bar"
-                style="
-                  width: 20px;
-                  height: 20px;
-                  background: #ddd;
-                  border-radius: 4px;
-                "
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Options -->
-        <div class="weather-controls" aria-label="Weather view selector">
-          <button class="btn btn--primary" data-target="ten-days">
-            Future Weather
-          </button>
-          <button class="btn btn--hourly" data-target="hourly">
-            Hourly Weather
-          </button>
-          <button class="btn btn--planning" data-target="planning">
-            For planning
-          </button>
-          <button class="btn btn--self" data-target="self">
-            Self forecasting
-          </button>
         </div>
       </div>
 
@@ -433,5 +418,13 @@
     <script type="module" src="script.js"></script>
     <script type="module" src="map.js"></script>
     <script type="module" src="options.js"></script>
+    <script type="module">
+      import { runGenerate } from "./Chatbox/test2.js";
+
+      document.getElementById("someBtn").addEventListener("click", async () => {
+        const result = await runGenerate();
+        console.log(result);
+      });
+    </script>
   </body>
 </html>
