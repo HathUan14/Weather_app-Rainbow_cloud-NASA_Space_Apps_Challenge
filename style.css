@@ -34,12 +34,14 @@ body{
   gap:12px;
 }
 .brand .logo{
+  background-image: url(./data/public/image/logo.jpg);
+  background-size : cover;
   width:42px;
   height:42px;
   display:inline-grid;
   place-items:center;
   border-radius:10px;
-  background:linear-gradient(135deg,#0f62fe,#6f8cff);
+  /* background:linear-gradient(135deg,#0f62fe,#6f8cff); */
   color:white;
   font-weight:700;
   font-size:18px;
@@ -169,6 +171,7 @@ body{
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.4);
   text-align: left;
 }
 
@@ -202,6 +205,7 @@ header {
     overflow-y: auto;
     overflow: auto;     
     min-width: 220px;
+    background-size: cover;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
 }
 /* Map wrapper (phải) */
@@ -392,4 +396,18 @@ a.climate-link {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+}
+
+#info.clear {background-image: url(./data/public/image/clearsky.jpg);}
+#info.cloud {background-image: url(/data/public/image/cloud.jpg);}
+#info.rain {background-image: url(/data/public/image/rain.jpg);}
+#info.snow {background-image: url(/data/public/image/snow.jpg);}
+#info.thunderstorm {background-image: url(/data/public/image/thunderstorm.jpg);}
+#info.mist {background-image: url(/data/public/image/mist.jpg);}
+#info.sunny {background-image: url(/data/public/image/sunny.jpg);}
+
+.grid_item {
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  font-style: bold;
 }

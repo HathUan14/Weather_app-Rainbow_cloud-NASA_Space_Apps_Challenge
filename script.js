@@ -109,87 +109,137 @@ document.querySelectorAll("button[data-target]").forEach(btn => {
     const main = document.querySelector("main");
 
     if (existingBox) {
-        // Nếu tồn tại rồi thì remove div
-        existingBox.remove();
+      // Nếu tồn tại rồi thì remove div
+      existingBox.remove();
     } else {
-        // Nếu chưa thì tạo mới div
-        const div = document.createElement("div");
-        div.className = "info-box";
-        div.id = "box-" + key;
-        div.innerHTML = `<div class="info-title">${titles[key]}</div>
+      // Nếu chưa thì tạo mới div
+      const div = document.createElement("div");
+      div.className = "info-box";
+      div.id = "box-" + key;
+      div.innerHTML = `<div class="info-title">${titles[key]}</div>
                         <p>Nội dung hiển thị cho ${titles[key]}...</p>`;
 
-        main.insertAdjacentElement("afterend", div); // Thêm bên cạnh main
+      main.insertAdjacentElement("afterend", div); // Thêm bên cạnh main
 
-        // Scroll xuống div vừa tạo
-        // div.scrollIntoView({ behavior: "smooth" });
+      // Scroll xuống div vừa tạo
+      // div.scrollIntoView({ behavior: "smooth" });
     }
-    });
+  });
 });
 
-////// Hàm cập nhật tất cả thông tin 
+//Hàm cập nhật background theo vị trí
+function updateBacground(description) {
+  const info = document.getElementById("info");
+  if (!info) return;
 
-export async function updateInfo(lat, lon, climateCode, climateType, elevation, place_name, country) {
-    document.getElementById('location_name').innerHTML = place_name + ', ' + country;
-    document.getElementById('elevation').innerHTML = "Leviation: " + elevation + 'm';
-    const containerClimate = document.getElementById('climate_type');
-    containerClimate.innerHTML = 
-    `Climate: <a class="climate-link" data-code="${climateCode}">${climateType}</a>`;
-    // click khí hậu
-    const link = containerClimate.querySelector(".climate-link");
-    link.onclick = function() {
-      showClimatePopup(climateCode, climateType);
-    };
+  info.classList.remove(
+    "clear",
+    "cloud",
+    "rain",
+    "snow",
+    "thunderstorm",
+    "mist",
+    "sunny"
+  );
 
-    try {
-        const current = await getCurrentWeather(lat, lon);
-        // Thông tin chính 
-        const tempC = (current.main.temp - 273.15).toFixed(1);
-        const feelsC = (current.main.feels_like - 273.15).toFixed(1);
-
-        document.getElementById('temperature').innerHTML = `${tempC}°C`;
-        document.getElementById('weather_desc').innerHTML = current.weather[0].description;
-        document.getElementById('feels_like').innerHTML = `Feels like: ${feelsC}°C`;
-
-        // Icon thời tiết 
-        document.getElementById('weather_icon').src =
-            `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`;
-
-        // Min/Max
-        const minC = (current.main.temp_min - 273.15).toFixed(1);
-        const maxC = (current.main.temp_max - 273.15).toFixed(1);
-        document.getElementById('temp_range').innerHTML = `Min ${minC}°C / Max ${maxC}°C`;
-
-        // Humidity
-        const humidity = current.main.humidity;
-        document.getElementById('humidity_value').innerHTML = `${humidity}%`;
-        document.getElementById('humidity_bar').style.width = humidity + "%";
-
-        // Wind 
-        const wind_ms = current.wind.speed;
-        const wind_kmh = (wind_ms * 3.6).toFixed(1);
-        document.getElementById('wind_value').innerHTML = `${wind_ms} m/s (${wind_kmh} km/h)`;
-
-        // Precipitation
-        let precip = 0;
-        if (current.rain && current.rain['1h']) precip = current.rain['1h'];
-        if (current.snow && current.snow['1h']) precip = current.snow['1h'];
-        document.getElementById('precip_value').innerHTML = `${precip} mm`;
-
-        // UV Index (OpenWeather cần API riêng, tạm để mock) 
-        let uv = "Moderate";
-        document.getElementById('uv_index').innerHTML = uv;
-
-        // Comfort level (demo: cấp 2/5) 
-        const bars = document.querySelectorAll(".comfort_bar");
-        bars.forEach((b, i) => {
-            b.style.background = i < 2 ? "#4caf50" : "#ddd";  // tô màu 2 ô
-        });
-    } catch (err) {
-        console.error("Error updating info:", err);
-    }
+  const desc = description.toLowerCase();
+  if (desc.includes("clear")) {
+    info.classList.add("clear");
+  } else if (desc.includes("cloud")) {
+    info.classList.add("cloud");
+  } else if (desc.includes("rain") || desc.includes("drizzle")) {
+    info.classList.add("rain");
+  } else if (desc.includes("snow")) {
+    info.classList.add("snow");
+  } else if (desc.includes("thunder")) {
+    info.classList.add("thunderstorm");
+  } else if (
+    desc.includes("mist") ||
+    desc.includes("fog") ||
+    desc.includes("haze")
+  ) {
+    info.classList.add("mist");
+  } else info.classList.add("sunny");
 }
 
+////// Hàm cập nhật tất cả thông tin
+
+export async function updateInfo(
+  lat,
+  lon,
+  climateCode,
+  climateType,
+  elevation,
+  place_name,
+  country
+) {
+  document.getElementById("location_name").innerHTML =
+    place_name + ", " + country;
+  document.getElementById("elevation").innerHTML =
+    "Leviation: " + elevation + "m";
+  const containerClimate = document.getElementById("climate_type");
+  containerClimate.innerHTML = `Climate: <a class="climate-link" data-code="${climateCode}">${climateType}</a>`;
+  // click khí hậu
+  const link = containerClimate.querySelector(".climate-link");
+  link.onclick = function () {
+    showClimatePopup(climateCode, climateType);
+  };
+
+  try {
+    const current = await getCurrentWeather(lat, lon);
+    // Thông tin chính
+    const tempC = (current.main.temp - 273.15).toFixed(1);
+    const feelsC = (current.main.feels_like - 273.15).toFixed(1);
+
+    document.getElementById("temperature").innerHTML = `${tempC}°C`;
+    document.getElementById("weather_desc").innerHTML =
+      current.weather[0].description;
+    document.getElementById("feels_like").innerHTML = `Feels like: ${feelsC}°C`;
+    const description = current.weather[0].main;
+    updateBacground(description);
+    // Icon thời tiết
+    document.getElementById(
+      "weather_icon"
+    ).src = `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`;
+
+    // Min/Max
+    const minC = (current.main.temp_min - 273.15).toFixed(1);
+    const maxC = (current.main.temp_max - 273.15).toFixed(1);
+    document.getElementById(
+      "temp_range"
+    ).innerHTML = `Min ${minC}°C / Max ${maxC}°C`;
+
+    // Humidity
+    const humidity = current.main.humidity;
+    document.getElementById("humidity_value").innerHTML = `${humidity}%`;
+    document.getElementById("humidity_bar").style.width = humidity + "%";
+
+    // Wind
+    const wind_ms = current.wind.speed;
+    const wind_kmh = (wind_ms * 3.6).toFixed(1);
+    document.getElementById(
+      "wind_value"
+    ).innerHTML = `${wind_ms} m/s (${wind_kmh} km/h)`;
+
+    // Precipitation
+    let precip = 0;
+    if (current.rain && current.rain["1h"]) precip = current.rain["1h"];
+    if (current.snow && current.snow["1h"]) precip = current.snow["1h"];
+    document.getElementById("precip_value").innerHTML = `${precip} mm`;
+
+    // UV Index (OpenWeather cần API riêng, tạm để mock)
+    let uv = "Moderate";
+    document.getElementById("uv_index").innerHTML = uv;
+
+    // Comfort level (demo: cấp 2/5)
+    const bars = document.querySelectorAll(".comfort_bar");
+    bars.forEach((b, i) => {
+      b.style.background = i < 2 ? "#4caf50" : "#ddd"; // tô màu 2 ô
+    });
+  } catch (err) {
+    console.error("Error updating info:", err);
+  }
+}
 
 ////// Modal popup cho thông tin khí hậu
 
