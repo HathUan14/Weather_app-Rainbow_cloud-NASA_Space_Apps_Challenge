@@ -1,6 +1,6 @@
 import {getCoordinates, getClimate, getElevation, getNameByCoordinates, updateInfo} from "./script.js"
 
-////// Cấu hình bản đồ cơ bản 
+////// Cấu hình bản đồ cơ bản
 
 const map = L.map('map', { preferCanvas: true }).setView([20, 0], 2);
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -12,19 +12,55 @@ const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenTopoMap'
 });
 
+// Nhóm chứa các đối tượng vẽ
+const drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+// Thêm control để vẽ polygon
+const drawControl = new L.Control.Draw({
+  edit: { featureGroup: drawnItems },
+  draw: {
+    polygon: true,
+    polyline: false,
+    rectangle: false,
+    circle: false,
+    marker: false,
+    circlemarker: false,
+  },
+});
+map.addControl(drawControl);
+
+// Khi vẽ xong 1 đa giác
+map.on(L.Draw.Event.CREATED, function (e) {
+  const layer = e.layer;
+  drawnItems.addLayer(layer);
+
+  // Lấy mảng tọa độ (lat, lng)
+  const coords = layer.getLatLngs()[0].map((pt) => [pt.lat, pt.lng]);
+  console.log("Tọa độ đa giác vừa vẽ:", coords);
+});
+
+// Khi edit hoặc delete thì log lại toàn bộ
+map.on("draw:edited draw:deleted", function () {
+  drawnItems.eachLayer((layer) => {
+    const coords = layer.getLatLngs()[0].map((pt) => [pt.lat, pt.lng]);
+    console.log("Tọa độ sau chỉnh sửa:", coords);
+  });
+});
+
 // Mask che phủ text Biển Đông
 var mask1 = L.circle([16.4045, 111.8198], {
-    radius: 150000,        
-    color: "rgb(170, 211, 223)",    
+    radius: 150000,
+    color: "rgb(170, 211, 223)",
     fillColor: "rgb(170, 211, 223)",
-    fillOpacity: 1.0     
+    fillOpacity: 1.0
 }).addTo(map);
 
 var mask2 = L.circle([10.2794, 114.0521], {
-    radius: 200000,        
-    color: "rgb(170, 211, 223)",    
+    radius: 200000,
+    color: "rgb(170, 211, 223)",
     fillColor: "rgb(170, 211, 223)",
-    fillOpacity: 1.0     
+    fillOpacity: 1.0
 }).addTo(map);
 
 // GeoJSON overlay Biển Đông
@@ -33,17 +69,17 @@ var islands = {
   "features": [
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [112.3, 16.5] }, 
+      "geometry": { "type": "Point", "coordinates": [112.3, 16.5] },
       "properties": { "name": "Hoàng Sa" }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [114.3, 10.0] }, 
+      "geometry": { "type": "Point", "coordinates": [114.3, 10.0] },
       "properties": { "name": "Trường Sa" }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [115.0, 14.0] }, 
+      "geometry": { "type": "Point", "coordinates": [115.0, 14.0] },
       "properties": { "name": "Biển Đông" }
     }
   ]
@@ -75,7 +111,7 @@ map.on('zoomend', function() {
   }
 });
 
-const koppen_geiger = "data/koppen_geiger_0p1.tif"//"data/koppen_geiger_0p00833333.tif"; // file tiff 
+const koppen_geiger = "data/koppen_geiger_0p1.tif"//"data/koppen_geiger_0p00833333.tif"; // file tiff
 // Bảng mapping Köppen-Geiger từ Beck et al. (2023)
 export const koppenClasses = {
   1:  { code: "Af",  name: "Tropical, rainforest",                  color: "rgb(0,0,255)" },
