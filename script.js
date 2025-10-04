@@ -249,8 +249,29 @@ function showClimatePopup(climateCode, climateType) {
   const desc = document.getElementById("climate_description");
 
   title.textContent = `${climateCode} - ${climateType}`;
-  desc.textContent = `Mã khí hậu: ${climateCode}\nMô tả: ${climateType}`;
+  // Đọc file txt có tên trùng với climateCode
+  fetch(`./data/climate/desc-en/${climateCode}.txt`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Không tìm thấy file " + climateCode + ".txt");
+      }
+      return response.text();
+    })
+    .then(text => {
+      // Giữ xuống dòng trong file txt khi hiển thị
+      desc.innerHTML = text.replace(/\n/g, "<br>");
+    })
+    .catch(err => {
+      desc.textContent = "Không có dữ liệu mô tả cho khí hậu này.";
+      console.error(err);
+    });
 
+      // Load ảnh (ví dụ Aw-1.jpg, Aw-2.jpg, Aw-3.jpg, Aw-4.jpg)
+  for (let i = 1; i <= 4; i++) {
+    const imgEl = document.getElementById(`img${i}`);
+    imgEl.src = `./data/climate/img/${climateCode}-${i}.jpg`;
+    imgEl.alt = `${climateType} - Ảnh ${i}`;
+  }
   modal.style.display = "block";
 }
 

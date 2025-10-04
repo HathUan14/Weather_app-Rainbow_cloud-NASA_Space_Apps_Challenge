@@ -391,6 +391,55 @@ a.climate-link {
   overflow-y: auto;
 }
 
+.modal-body {
+  display: flex;
+  gap: 20px;
+}
+
+/* Text chiếm 2/3 */
+.modal-text {
+  flex: 2;
+}
+
+/* Ảnh chiếm 1/3 */
+.modal-image {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+.modal-image img {
+  width: 100%;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+/* Responsive trên mobile */
+@media (max-width: 768px) {
+  .modal-body {
+    flex-direction: column;
+  }
+
+  .modal-text, 
+  .modal-image {
+    flex: unset; /* bỏ tỷ lệ 2/3, 1/3 */
+    width: 100%; /* mỗi phần full width */
+  }
+
+  .modal-image {
+    flex-direction: row; 
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .modal-image img {
+    width: 45%; /* chia 2 ảnh 1 hàng cho gọn */
+  }
+}
+
 .close {
   float: right;
   font-size: 28px;
