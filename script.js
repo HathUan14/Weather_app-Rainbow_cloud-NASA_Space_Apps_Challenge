@@ -266,7 +266,7 @@ function showClimatePopup(climateCode, climateType) {
       console.error(err);
     });
 
-      // Load ảnh (ví dụ Aw-1.jpg, Aw-2.jpg, Aw-3.jpg, Aw-4.jpg)
+      // Load ảnh
   for (let i = 1; i <= 4; i++) {
     const imgEl = document.getElementById(`img${i}`);
     imgEl.src = `./data/climate/img/${climateCode}-${i}.jpg`;
