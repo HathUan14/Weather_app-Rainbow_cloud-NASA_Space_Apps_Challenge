@@ -425,8 +425,8 @@ a.climate-link {
 
   .modal-text, 
   .modal-image {
-    flex: unset; /* bỏ tỷ lệ 2/3, 1/3 */
-    width: 100%; /* mỗi phần full width */
+    flex: unset;
+    width: 100%;
   }
 
   .modal-image {
@@ -436,7 +436,7 @@ a.climate-link {
   }
 
   .modal-image img {
-    width: 45%; /* chia 2 ảnh 1 hàng cho gọn */
+    width: 45%; 
   }
 }
 
