@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <title>Weather & Health Advice — Gemini</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        margin: 18px;
+        color: #111;
+      }
+      header {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      h1 {
+        margin: 0;
+        font-size: 18px;
+      }
+      #controls {
+        margin-top: 12px;
+        max-width: 900px;
+      }
+      textarea {
+        width: 100%;
+        min-height: 120px;
+        font-family: monospace;
+        font-size: 13px;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      button {
+        padding: 8px 12px;
+        background: #1a73e8;
+        color: #fff;
+        border: 0;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      #output {
+        margin-top: 14px;
+        white-space: pre-wrap;
+        background: #f7f7f8;
+        border: 1px solid #e1e1e4;
+        padding: 12px;
+        border-radius: 6px;
+        min-height: 140px;
+        max-width: 900px;
+      }
+      .muted {
+        color: #666;
+        font-size: 13px;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Weather & Health Advice (Gemini)</h1>
+    </header>
+
+    <div id="controls">
+      <!--
+      English comments only as requested.
+      Keep the API call format exactly the same as original:
+      POST to: https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}
+      Body: { contents: [{ parts: [{ text: prompt }] }] }
+    -->
+      <div class="muted">
+        Replace <strong>API_KEY</strong> with your Google AI Studio key before
+        running.
+      </div>
+
+      <div style="margin-top: 10px">
+        <label for="model">Model</label>
+        <input id="model" type="text" value="gemini-2.5-flash" />
+      </div>
+
+      <div style="margin-top: 10px">
+        <label for="activity"
+          >Loại hoạt động (ví dụ: thể thao, du lịch, đi học...)</label
+        >
+        <input id="activity" type="text" placeholder="Nhập loại hoạt động..." />
+      </div>
+
+      <div style="margin-top: 10px">
+        <button id="runBtn">Generate Advice (use embedded weatherData)</button>
+        <button id="showJSONBtn" style="margin-left: 8px">
+          Show / Edit JSON Data
+        </button>
+      </div>
+
+      <div id="jsonEditor" style="display: none; margin-top: 10px">
+        <div><strong>weatherData (JSON array)</strong></div>
+        <textarea id="weatherTxt"></textarea>
+
+        <div style="margin-top: 8px">
+          <strong>healthData (JSON array)</strong>
+        </div>
+        <textarea id="healthTxt"></textarea>
+
+        <div style="margin-top: 8px">
+          <button id="applyBtn">Apply edited JSON</button>
+        </div>
+      </div>
+
+      <div id="output" aria-live="polite"></div>
+    </div>
+
+    <script type="module" src="test2.js"></script>
+    <script type="module">
+      import { runGenerate } from "./test2.js";
+
+      // gọi trong nút hoặc event
+      document.getElementById("runBtn").addEventListener("click", runGenerate);
+    </script>
+  </body>
+</html>
