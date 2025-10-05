@@ -145,16 +145,9 @@
           </div>
 
           <!-- Get Weather Button -->
-          <button id="getWeatherBtn" type="submit" class="get-weather-btn">
+          <button id="getWeatherBtn" type="submit" class="get-weather-btn" onClick="getForecastByModel">
             Get Weather
           </button>
-          <script type="module">
-            import { runGenerate } from "./script.js";
-
-            document
-              .getElementById("getWeatherBtn")
-              .addEventListener("click", runGenerate);
-          </script>
         </form>
       </div>
     </header>
