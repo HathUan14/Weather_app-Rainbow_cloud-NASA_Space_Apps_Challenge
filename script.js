@@ -287,7 +287,7 @@ async function showClimatePopup(climateCode, climateType, place) {
       chartDiv.innerHTML = `<p style="text-align:center">Loading...</p>`;
       // Gọi API
       const res = await fetch(
-        `https://weather-app-rainbow-cloud-nasa-space.onrender.com/monthly_weather?place=${encodeURIComponent(
+        `http://127.0.0.1:8000/monthly_weather?place=${encodeURIComponent(
           place
         )}`
       );

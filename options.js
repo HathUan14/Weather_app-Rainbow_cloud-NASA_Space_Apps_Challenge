@@ -147,3 +147,15 @@ const btnHourly = document.querySelector(".btn.btn--hourly");
 btnHourly.onclick = getForecastByModel;
 
 // C:\Python313\python.exe -m uvicorn main:app --reload
+
+
+
+////// self forcasting
+
+const btnSelf = document.querySelector('.btn.btn--self');
+btnSelf.addEventListener('click', () => {
+  const box = document.getElementById('box-self');
+  if (box) {
+
+  } 
+});
