@@ -156,6 +156,6 @@ const btnSelf = document.querySelector('.btn.btn--self');
 btnSelf.addEventListener('click', () => {
   const box = document.getElementById('box-self');
   if (box) {
-
+    
   } 
 });
