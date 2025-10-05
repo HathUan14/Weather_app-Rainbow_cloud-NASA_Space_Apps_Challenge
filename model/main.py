@@ -27,9 +27,15 @@ from core.analysis import (
 app = FastAPI()
 templates = Jinja2Templates(directory="frontend")
 
+origins = [
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "https://your-frontend.github.io",  # nếu bạn deploy frontend lên GitHub Pages
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
