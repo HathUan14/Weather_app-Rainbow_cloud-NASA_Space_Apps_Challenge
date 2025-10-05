@@ -1,3 +1,33 @@
+
+## Summary ##
+
+- Rainbow Cloud là website giúp cải thiện sự thông hiểu của người dùng về thời tiết. Sử dụng mô hình phân tích thời tiết theo lịch sử, đưa ra lời khuyên tránh rủi ro thời tiết, dashboard để trực quan hóa dữ liệu thời tiết, bản đồ có thể tương tác và trực quan dữ liệu.
+- Người dùng có thể dùng với nhiều mục đích, như lên kế hoạch khi đi du lịch trong một tuần vào tháng sau; Xem các chỉ số thời tiết theo giờ trong ngày thứ 7 tuần này; Khám phá thời tiết trong năm mọi địa điểm trên khắp thế giới qua 30 kiểu khí hậu; 
+
+## Project Demo ##
+
+![alt text](img/image.png)
+![alt text](img/image-1.png)
+![alt text](img/image-2.png)
+![alt text](img/image-4.png)
+![alt text](img/image-3.png)
+![alt text](img/image-5.png)
+![alt text](img/image-6.png)
+
+## How it works ##
+
+1. Front-end: sử dụng `Javascipt, CSS, HTML` để xây dựng cấu trúc và thao tác trên trang web. 
+2. Back-end: sử dụng các thư viện như `sklearn` trên `Python` để chạy mô hình dự đoán và kết nối với front-end thông qua api chạy trên `fastapi`
+
+## Tools & Data ##
+
+- Data Source: NASA POWER API, OpenWeather API, OpenStreet Map, Open Topo Map
+- Machine Learning: LightGBM for long-term prediction
+- AI Support: Google Gemini for generating activity and health advice
+- Frontend: HTML, CSS, JavaScript
+- Backend: Python
+- Climate types data: Beck, H.E., T.R. McVicar, N. Vergopolan, A. Berg, N.J. Lutsko, A. Dufour, Z. Zeng, X. Jiang, A.I.J.M. van Dijk, D.G. MirallesHigh-resolution (1 km) Köppen-Geiger maps for 1901–2099 based on constrained CMIP6 projectionsScientific Data 10, 724, doi:10.1038/s41597-023–02549‑6 (2023)
+
 ## 🛠 Cách cài đặt và sử dụng 🛠
 1. Clone về máy: ở vscode, mở terminal, chuyển về thư mục của bạn, chạy lệnh: git clone  *[url repository]* hoặc tải file zip. Khi cần cập nhật lại sau khi dùng git clone xong thì thì chạy lệnh: git pull origin master.
 2. Project sử dụng API key cá nhân của openWeather, vì mục đích bảo mật nên mình không để API key của mình (API này free, có giới hạn). Bạn cần tạo file mới là config.js ở cùng thư mục với file index.html và ghi vào file config.js như sau, YOUR API KEY sẽ có dạng thế này: 1234567c2190acb7d1531265b3ea55abcdef
@@ -27,4 +57,3 @@
 - *options.js* module cài đặt 4 tính năng quan trọng của website
 - *config.js* chứa các biến toàn cục cài đặt cho chương trình
 - *style.css* file điều chỉnh UI/UX
-
