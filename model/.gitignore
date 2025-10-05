@@ -1,0 +1,15 @@
+.vscode/
+__pycache__/
+
+.venv/
+
+/app.py
+/main.ipynb
+/nasa_power_data.csv
+/temp.py
+/Untitled24.ipynb
+
+
+
+/monthly.ipynb
+/daily.ipynb
