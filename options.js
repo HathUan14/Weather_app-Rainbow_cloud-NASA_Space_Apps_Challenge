@@ -152,10 +152,63 @@ btnHourly.onclick = getForecastByModel;
 
 ////// self forcasting
 
-const btnSelf = document.querySelector('.btn.btn--self');
-btnSelf.addEventListener('click', () => {
+function displaceSelf() {
   const box = document.getElementById('box-self');
   if (box) {
-    
+    // Tạo phần tử cha tương tự modal-body
+    const selfForecastBody = document.createElement('div');
+    selfForecastBody.classList.add('self-forecast-body');
+
+    // Tạo phần tử con tương tự modal-text
+    const selfForecastLeft = document.createElement('div');
+    selfForecastLeft.classList.add('self-forecast-left');
+
+    // Tạo phần tử con thứ hai tương tự modal-text (self-info)
+    const selfInfo = document.createElement('div');
+    selfInfo.classList.add('self-info');
+
+    // Tạo phần tử con thứ ba tương tự modal-image
+    const selfImg = document.createElement('div');
+    selfImg.classList.add('self-img');
+
+    // Ghép chúng vào với nhau
+    selfForecastBody.appendChild(selfForecastLeft);
+    selfForecastBody.appendChild(selfInfo);
+    selfForecastBody.appendChild(selfImg);
+
+    // Cuối cùng, chèn vào info-box
+    box.appendChild(selfForecastBody);
+
+     fetch(`./data/cloud/desc-en/${cloudcode}.txt`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Không tìm thấy file " + cloudcode + ".txt");
+        }
+        return response.text();
+      })
+      .then((text) => {
+        // Giữ xuống dòng trong file txt khi hiển thị
+        selfInfo.innerHTML = text.replace(/\n/g, "<br>");
+      })
+      .catch((err) => {
+        selfInfo.textContent = "Không có dữ liệu mô tả cho khí hậu này.";
+        console.error(err);
+      });
+    imgDiv.innerHTML = "";
+
+    for (let i = 1; i <= 3; i++) {
+      const img = document.createElement("img");
+      selfImg.src = `./data/cloud/img/${cloudcode}-${i}.jpg`;
+      selfImg.alt = `${cloudtype} - Ảnh ${i}`;
+      selfImg.style.width = "150px"; // tuỳ chỉnh
+      selfImg.style.margin = "5px";
+      imgDiv.appendChild(img);
+    }
+    box.style.display = "block";
+    box.scrollIntoView({ behavior: "smooth" });
   } 
-});
+} 
+window.displaceSelf = displaceSelf()
+const btnSelf = document.querySelector('.btn.btn--self');
+btnSelf.onclick = displaceSelf;
+

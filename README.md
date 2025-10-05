@@ -39,7 +39,7 @@
 >*Với mục đích dự đoán thời tiết cần cài đặt và sử dụng Python trên máy*
 4. Bạn cần biết phiên bản python của mình (đề phòng lỗi về thư viện): ở terminal Vscode dùng lệnh python --version, kết quả phiên bản của mình là Python 3.13.7
 5. Mở file explorer, chọn vào thư mục model của project này trên máy, chuột phải và chọn "Open with code" để đưa con trỏ terminal của Vscode vào thư mục, ở cửa sổ Vscode này (sau khi cài đặt pip-là công cụ của python) chạy lệnh sau và chờ 10 phút nếu không có lỗi gì xảy ra
->**pip install -r requirement.txt**
+>**pip install -r requirements.txt**
 
 6. Chạy lệnh sau để chạy back-end, tạo ra đường dẫn api ở cổng http://127.0.0.1:8000 trên máy tính
 >**python -m uvicorn main:app --reload**

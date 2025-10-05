@@ -557,3 +557,63 @@ a.climate-link {
   font-weight: bold;
   font-size: 1.3rem;
 }
+
+/*--------------- Clouds Cast -------------- */
+.self-forecast-body {
+  display: flex;
+  gap: 20px;
+}
+
+/* Phần trái */
+.self-forecast-left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Phần mô tả */
+.self-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Phần hình ảnh */
+.self-img {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.self-img img {
+  width: 100%;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .self-forecast-body {
+    flex-direction: column;
+  }
+
+  .self-forecast-left,
+  .self-info,
+  .self-img {
+    flex: unset;
+    width: 100%;
+  }
+
+  .self-img {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .self-img img {
+    width: 45%;
+  }
+}
