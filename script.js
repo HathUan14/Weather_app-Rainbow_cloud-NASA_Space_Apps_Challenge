@@ -122,8 +122,7 @@ document.querySelectorAll("button[data-target]").forEach((btn) => {
       const div = document.createElement("div");
       div.className = "info-box";
       div.id = "box-" + key;
-      div.innerHTML = `<div class="info-title">${titles[key]}</div>
-                        <p>Nội dung hiển thị cho ${titles[key]}...</p>`;
+      div.innerHTML = `<div class="info-title">${titles[key]}</div>`;
 
       main.insertAdjacentElement("afterend", div); // Thêm bên cạnh main
 

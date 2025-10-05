@@ -158,28 +158,52 @@ function displaceSelf() {
     // Tạo phần tử cha tương tự modal-body
     const selfForecastBody = document.createElement('div');
     selfForecastBody.classList.add('self-forecast-body');
-
     // Tạo phần tử con tương tự modal-text
     const selfForecastLeft = document.createElement('div');
     selfForecastLeft.classList.add('self-forecast-left');
 
-    // Tạo phần tử con thứ hai tương tự modal-text (self-info)
+    const selfImg = document.createElement('div');
+    selfImg.classList.add('self-img');
+    selfForecastLeft.innerHTML = `
+    <div class="image-container">
+      <img src="./data/cloud/cl.jpg" alt="Clouds" class="background-image">
+
+      <button class="hotspot" style="top: 36%; left: 21%;" onclick="updateCloud(9)"></button>
+      <button class="hotspot" style="top: 36%; left: 39%;" onclick="updateCloud(7)"></button>
+      <button class="hotspot" style="top: 36%; left: 53%;" onclick="updateCloud(8)"></button>
+      <button class="hotspot" style="top: 57%; left: 53%;" onclick="updateCloud(4)"></button>
+      <button class="hotspot" style="top: 51%; left: 33%;" onclick="updateCloud(6)"></button>
+      <button class="hotspot" style="top: 70%; left: 20%;" onclick="updateCloud(5)"></button>
+      <button class="hotspot" style="top: 75%; left: 82%;" onclick="updateCloud(10)"></button>
+      <button class="hotspot" style="top: 75%; left: 53%;" onclick="updateCloud(1)"></button>
+      <button class="hotspot" style="top: 70%; left: 40%;" onclick="updateCloud(3)"></button>
+      <button class="hotspot" style="top: 76%; left: 31%;" onclick="updateCloud(2)"></button>
+    </div>
+  `;
+
     const selfInfo = document.createElement('div');
     selfInfo.classList.add('self-info');
 
-    // Tạo phần tử con thứ ba tương tự modal-image
-    const selfImg = document.createElement('div');
-    selfImg.classList.add('self-img');
-
-    // Ghép chúng vào với nhau
+    selfForecastLeft.appendChild(selfImg)
     selfForecastBody.appendChild(selfForecastLeft);
     selfForecastBody.appendChild(selfInfo);
-    selfForecastBody.appendChild(selfImg);
-
-    // Cuối cùng, chèn vào info-box
     box.appendChild(selfForecastBody);
 
-     fetch(`./data/cloud/desc-en/${cloudcode}.txt`)
+     
+  } 
+} 
+window.displaceSelf = displaceSelf()
+const btnSelf = document.querySelector('.btn.btn--self');
+btnSelf.onclick = displaceSelf;
+
+function updateCloud(id) {
+
+  let cloudcode = id;
+  let cloudtype = 'o'; // Chưa làm
+  const selfInfo = document.querySelector(".self-info");
+  const selfImg = document.querySelector(".self-img");
+
+  fetch(`./data/cloud/desc-en/${cloudcode}.txt`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Không tìm thấy file " + cloudcode + ".txt");
@@ -194,21 +218,14 @@ function displaceSelf() {
         selfInfo.textContent = "Không có dữ liệu mô tả cho khí hậu này.";
         console.error(err);
       });
-    imgDiv.innerHTML = "";
-
+      selfImg.innerHTML = '';
     for (let i = 1; i <= 3; i++) {
       const img = document.createElement("img");
-      selfImg.src = `./data/cloud/img/${cloudcode}-${i}.jpg`;
-      selfImg.alt = `${cloudtype} - Ảnh ${i}`;
-      selfImg.style.width = "150px"; // tuỳ chỉnh
-      selfImg.style.margin = "5px";
-      imgDiv.appendChild(img);
+      img.src = `./data/cloud/img/${cloudcode}-${i}.jpg`;
+      img.alt = `${cloudtype} - Ảnh ${i}`;
+      img.style.width = "150px"; // tuỳ chỉnh
+      img.style.margin = "5px";
+      selfImg.appendChild(img);
     }
-    box.style.display = "block";
-    box.scrollIntoView({ behavior: "smooth" });
-  } 
-} 
-window.displaceSelf = displaceSelf()
-const btnSelf = document.querySelector('.btn.btn--self');
-btnSelf.onclick = displaceSelf;
-
+}
+window.updateCloud = updateCloud
